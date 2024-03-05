@@ -1,30 +1,67 @@
-import reactImg from "./assets/react-core-concepts.png";
+import { useState } from "react";
+import Header from "../component/Header.jsx";
+import { CORE_CONCEPTS } from "./data.js";
+import CoreConcept from "../component/CoreConcept.jsx";
+import TapBatton from "../component/Tapbutton.jsx";
 
-const reactDescriptions = ["Fundamental", "Crucial", "Core"];
-
-function genRandomInt(max) {
-  return Math.floor(Math.random() * (max + 1));
-}
-
-function Header() {
-  const descriptions = reactDescriptions[genRandomInt(2)];
-  return (
-    <header>
-      <img src={reactImg} alt="Stylized atom" />
-      <h1>React Essentials</h1>
-      <p>
-        {descriptions} React concepts you will need for almost any app you are
-        going to build!
-      </p>
-    </header>
-  );
-}
 function App() {
+  const [selsctedTopic, setSelesctedTopic] = useState("please click any button");
+
+  function handleSelect(selectedButton) {
+    setSelesctedTopic(selectedButton);
+    console.log(selsctedTopic);
+  }
   return (
     <div>
+      <Header></Header>
       <main>
-        <Header></Header>
-        <h2>Time to get started!</h2>
+        <section id="core-concepts">
+          <h2>Core Concepts</h2>
+          <ul>
+            <CoreConcept
+              title={CORE_CONCEPTS[0].title}
+              description={CORE_CONCEPTS[0].description}
+              image={CORE_CONCEPTS[0].image}
+            />
+            <CoreConcept {...CORE_CONCEPTS[1]} />
+            <CoreConcept {...CORE_CONCEPTS[2]} />
+            <CoreConcept {...CORE_CONCEPTS[3]} />
+          </ul>
+        </section>
+        <section id="examples">
+          <h2>Examples</h2>
+          <menu>
+            <TapBatton
+              onSelect={() => {
+                handleSelect("Components");
+              }}
+            >
+              Components
+            </TapBatton>
+            <TapBatton
+              onSelect={() => {
+                handleSelect("JSX");
+              }}
+            >
+              JSX
+            </TapBatton>
+            <TapBatton
+              onSelect={() => {
+                handleSelect("props");
+              }}
+            >
+              props
+            </TapBatton>
+            <TapBatton
+              onSelect={() => {
+                handleSelect("State");
+              }}
+            >
+              State
+            </TapBatton>
+          </menu>
+          {selsctedTopic}
+        </section>
       </main>
     </div>
   );
